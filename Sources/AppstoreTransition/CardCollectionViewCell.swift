@@ -21,7 +21,7 @@ public protocol CardCollectionViewCell: UIView {
     func resetTransform()
     func freezeAnimations()
     func unfreezeAnimations()
-    
+    func resetUI()
 }
 
 public extension CardCollectionViewCell {

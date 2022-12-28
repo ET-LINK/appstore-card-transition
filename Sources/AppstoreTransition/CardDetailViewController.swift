@@ -180,6 +180,7 @@ public final class CardDismissHandler: NSObject {
                 let animator = UIViewPropertyAnimator(duration: 0, curve: .linear, animations: {
                     targetAnimatedView.transform = .init(scaleX: targetShrinkScale, y: targetShrinkScale)
                     targetAnimatedView.layer.cornerRadius = targetCornerRadius
+                    targetAnimatedView.layer.masksToBounds = true
                 })
                 animator.isReversed = false
                 animator.pauseAnimation()
@@ -299,6 +300,8 @@ public final class CardDismissHandler: NSObject {
             return scrollView.contentOffset.y <= 0
         }
     }
+    
+
     
 }
 

@@ -39,8 +39,14 @@ final class CardPresentationController: UIPresentationController {
         presentingViewController.beginAppearanceTransition(false, animated: false)
         presentedViewController.transitionCoordinator!.animate(alongsideTransition: { (ctx) in
             UIView.animate(withDuration: 0.5, animations: {
-                self.blurView.alpha = self.settings?.blurAlpha ?? 1.0
+                
             })
+            UIView.animate(withDuration: 0.5) {
+                self.blurView.alpha = self.settings?.blurAlpha ?? 1.0
+            } completion: { flag in
+                self.blurView.alpha = 0.0
+            }
+
         }) { (ctx) in }
     }
     

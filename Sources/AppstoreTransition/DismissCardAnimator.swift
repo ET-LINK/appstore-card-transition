@@ -53,6 +53,8 @@ final class DismissCardAnimator: NSObject, UIViewControllerAnimatedTransitioning
             cardDetailView.layer.borderColor = UIColor.red.cgColor
             cardDetailView.layer.borderWidth = 2
         }
+        animatedContainerView.layer.cornerRadius = params.settings.cardCornerRadius
+        animatedContainerView.layer.masksToBounds = true
         animatedContainerView.translatesAutoresizingMaskIntoConstraints = false
         cardDetailView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -66,6 +68,7 @@ final class DismissCardAnimator: NSObject, UIViewControllerAnimatedTransitioning
         
         animatedContainerView.centerXAnchor.constraint(equalTo: container.centerXAnchor).isActive = true
         let animatedContainerTopConstraint = animatedContainerView.topAnchor.constraint(equalTo: container.topAnchor, constant: params.settings.cardContainerInsets.top)
+      
         let animatedContainerWidthConstraint = animatedContainerView.widthAnchor.constraint(equalToConstant: cardDetailView.frame.width - (params.settings.cardContainerInsets.left + params.settings.cardContainerInsets.right))
         let animatedContainerHeightConstraint = animatedContainerView.heightAnchor.constraint(equalToConstant: cardDetailView.frame.height - (params.settings.cardContainerInsets.top + params.settings.cardContainerInsets.bottom))
         
@@ -79,6 +82,7 @@ final class DismissCardAnimator: NSObject, UIViewControllerAnimatedTransitioning
         
         // Force card filling bottom
         let stretchCardToFillBottom = screens.cardDetail.cardContentView.bottomAnchor.constraint(equalTo: cardDetailView.bottomAnchor)
+        
         // for tableview header required confilcts with autoresizing mask constraints
         stretchCardToFillBottom.priority = .defaultHigh
         
@@ -116,10 +120,11 @@ final class DismissCardAnimator: NSObject, UIViewControllerAnimatedTransitioning
                 container.addSubview(cardDetailView)
                 cardDetailView.edges(to: container)
             }
+            params.fromCell.resetUI()
             ctx.completeTransition(success)
         }
         
-        UIView.animate(withDuration: transitionDuration(using: ctx), delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.0, options: [], animations: {
+        UIView.animate(withDuration: transitionDuration(using: ctx), delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0, options: [], animations: {
             animateCardViewBackToPlace()
         }) { (finished) in
             completeEverything()

@@ -34,7 +34,7 @@ public class TransitionSettings {
     /// If true, will always allow user to scroll while it's animated.
     public var isEnabledAllowsUserInteractionWhileHighlightingCard = true
     
-    public var cardContainerInsets: UIEdgeInsets = UIEdgeInsets(top: 8.0, left: 8.0, bottom: 8.0, right: 8.0)
+    public var cardContainerInsets: UIEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
     
     public enum CardVerticalExpandingStyle {
         /// Expanding card pinning at the top of animatingContainerView
@@ -62,6 +62,7 @@ public final class CardTransition: NSObject, UIViewControllerTransitioningDelega
     let settings: TransitionSettings
     
     public var updatedCardFrame: (()->(CGRect))?
+    public var cardOnScreenFrame: CGRect?
     
     public init(cell: CardCollectionViewCell, settings: TransitionSettings = TransitionSettings()) {
         // Freeze highlighted state (or else it will bounce back)
@@ -80,6 +81,7 @@ public final class CardTransition: NSObject, UIViewControllerTransitioningDelega
         
         // Convert current frame to screen's coordinates
         let cardPresentationFrameOnScreen = cell.superview!.convert(currentCellFrame, to: nil)
+        cardOnScreenFrame = cardPresentationFrameOnScreen
         
         // Get card frame without transform in screen's coordinates  (for the dismissing back later to original location)
         let cardFrameWithoutTransform = { () -> CGRect in
